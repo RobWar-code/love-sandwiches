@@ -19,14 +19,19 @@ def get_sales_data():
     """
         Get sales data from the user
     """
-    print("Please enter sales data from the last market.")
-    print("Data should be six numbers separated by commas.")
-    print("Example 10,20,30,40,50,60\n")
+    while True:
+        print("Please enter sales data from the last market.")
+        print("Data should be six numbers separated by commas.")
+        print("Example 10,20,30,40,50,60\n")
 
-    str_data = input("Enter your data here:")
+        str_data = input("Enter your data here:")
 
-    sales_data = str_data.split(",")
-    validate_data(sales_data)
+        sales_data = str_data.split(",")
+        if validate_data(sales_data):
+            print("Data valid")
+            break
+
+    return sales_data
 
 
 def validate_data(values):
@@ -36,12 +41,16 @@ def validate_data(values):
         Checks that there ar exactly six values
     """
     try:
+        [int(value) for value in values]
         if len(values) != 6:
             raise ValueError(
-                f"Exactly six values must given, you provided {len(values)}"
+                f"Exactly six values must be given, you provided {len(values)}"
             )
     except ValueError as e:
         print(f"Invalid data entered: {e}, please try again\n")
+        return False
+
+    return True
 
 
-get_sales_data()
+data = get_sales_data()
